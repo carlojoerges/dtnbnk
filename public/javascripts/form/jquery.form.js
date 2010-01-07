@@ -330,10 +330,10 @@ $.fn.ajaxSubmit = function(options) {
 
             // clean up
             setTimeout(function() {
-                $io.remove();
+				// Carlo: Safari stalls if iframe is removed
+//                $io.remove();
                 xhr.responseXML = null;
-                // Carlo edit: 100 to 1000
-            }, 1500);
+            }, 200);
         };
 
         function toXml(s, doc) {

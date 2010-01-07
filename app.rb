@@ -154,10 +154,10 @@ post '/upload' do
   item.to_json
 end
 
-get '/close' do
-  headers['Connection'] = "close"
-  "closeme"
-end
+# get '/close' do
+#   headers({'Connection' => "close"})
+#   "closeme"
+# end
 
 def save_uploaded_file(file, filepath)
   p file

@@ -18,8 +18,8 @@ Image = ContentItem.extend({
             },
             success: function(resp) { 
                 respObj = JSON.parse(resp);
-          			father.data = respObj;
-          			father.refresh();
+          		father.data = respObj;
+          		father.refresh();
         }});
 				return false;
 			});

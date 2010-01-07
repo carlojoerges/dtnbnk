@@ -1,4 +1,4 @@
-Vocabulary = ListItem.extend({
+Vocabulary = ContentItem.extend({
 	init: function(data, element) {
 		this.__super__(data, element);
 		this.data = $.extend({
@@ -21,6 +21,9 @@ Vocabulary = ListItem.extend({
 		$(".tag",this.container).draggable({revert: "invalid", helper: 'clone'});
 	},
 	buildex: function() {
+		this.element.addClass("box vocabulary");
+		this.head = $("<h1/>").appendTo(this.element);
+		this.container = $("<div/>").addClass("content").appendTo(this.element);
 		var father = this;
 		this.head.text(this.data.name || "Vocabulary").makeeditable(this);
 		$("<div />").addClass("edit").Button(function() {

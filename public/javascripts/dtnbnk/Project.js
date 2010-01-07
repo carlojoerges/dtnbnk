@@ -1,4 +1,4 @@
-Project = ListItem.extend({
+Project = ContentItem.extend({
 	init: function(data, element) {
 		this.__super__(data, element);
 		this.data = $.extend({
@@ -15,6 +15,9 @@ Project = ListItem.extend({
 		});
 	},
 	buildex: function() {
+		this.element.addClass("box project");
+		this.head = $("<h1/>").appendTo(this.element);
+		this.container = $("<div/>").addClass("content").appendTo(this.element);
 		this.head.text(this.data.name || "New Project").makeeditable(this);
 		var father = this;
 		this.buttons = this.editElement;
