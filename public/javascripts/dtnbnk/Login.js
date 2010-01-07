@@ -1,7 +1,9 @@
 Login = Class({
 	init: function(element) {
 		this.element = element;
-		this.data = {};
+		this.data = {
+			type: "user"
+		};
 		var father = this;
 		this.element.append($.nano.html("/templates/_login.html",null, {callback: function(el) {
 			$("form .logout",father.element).hide();
