@@ -10,7 +10,7 @@ $.fn.makeeditable = function(father, options, callback) {
 		height: "none",
 		event: "dblclick"
 		}, options || {}));
-		$(this).editable("disable");
+		if (!getUser()) $(this).editable("disable");
 	}
 
 
@@ -49,6 +49,10 @@ function makenew(ob) {
 		default: item = new Item(ob); break;
 	}
 	return item;
+}
+
+function getUser() {
+	if (login && login.data) return login.data; else return false;
 }
 
 function closeKeepAlive() {

@@ -1,3 +1,4 @@
+var login = null;
 
 $(document).ready(function() {
     $("body").append($.nano.html("/templates/_main.html",null, {callback: bodyLoaded}));
@@ -11,10 +12,10 @@ function bodyLoaded() {
 	projectlist = new ItemList($("<div />","a").appendTo($("#col3")), {
 		query: { type: "project", forward_items:"all"}
 	});
-	$("<div />").Button(function() {
+	$("<div />").addClass("edit").Button(function() {
 		projectlist.add(new Project({},$("<div/>")));
 	},"New Entry").appendTo("#col2");
-	$("<div />").Button(function() {
+	$("<div />").addClass("edit").Button(function() {
 		vocablist.add(new Vocabulary({},$("<div/>")));
 	},"New Vocabulary").appendTo("#col2");
 	login = new Login($("<div />").appendTo($("#col2")));
