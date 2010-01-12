@@ -32,7 +32,7 @@ $.fn.Button = function(callback, title) {
 };
 
 function flashmessage(el, msg) {
-	$(el).append(msg.hide().fadeIn("fast").animate({dummy: 1}, 1000).fadeOut("slow", function(){
+	$(el).append(msg.addClass("overlaymessage").hide().fadeIn("fast").animate({dummy: 1}, 1000).fadeOut("slow", function(){
 		$(this).remove();
 		}));  
 }

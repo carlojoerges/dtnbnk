@@ -5,6 +5,7 @@
   %head
     %title db
     %meta{'http-equiv'=>"Content-Type", :content=>"text/html; charset=iso-8859-1"}/
+    %meta{'http-equiv'=>"Content-Script-Type", :content=>"text/javascript"}/
     %meta{'http-equiv'=>"Content-Language", :content=>"en-us"}/
     %link{:href=>"/stylesheets/screen.css", :media=>"screen", :rel=>"stylesheet", :type=>"text/css"}/
     %script{:type => "text/javascript", :src  => "javascripts/jquery-1.3.min.js"}
@@ -13,9 +14,12 @@
     %script{:type => "text/javascript", :src  => "javascripts/ui/ui.draggable.js"}
     %script{:type => "text/javascript", :src  => "javascripts/ui/ui.droppable.js"}
     %script{:type => "text/javascript", :src  => "javascripts/ui/ui.sortable.js"}
+    %script{:type => "text/javascript", :src  => "javascripts/ui/effects.core.js"}
+    %script{:type => "text/javascript", :src  => "javascripts/ui/effects.slide.js"}
     %script{:type => "text/javascript", :src  => "javascripts/jquery.jeditable.mini.js"}    
     %script{:type => "text/javascript", :src  => "javascripts/json2.js"}    
     %script{:type => "text/javascript", :src  => "javascripts/oo.js"}
+    %script{:type => "text/javascript", :src  => "javascripts/inflection.js"}    
     %script{:type => "text/javascript", :src  => "javascripts/sha1-min.js"}
     %script{:type => "text/javascript", :src  => "javascripts/form/jquery.form.js"}
     %script{:type => "text/javascript", :src  => "javascripts/dtnbnk/lib.js"}
@@ -29,5 +33,8 @@
     %script{:type => "text/javascript", :src  => "javascripts/dtnbnk/Vocabulary.js"}
     %script{:type => "text/javascript", :src  => "javascripts/dtnbnk/Project.js"}
     %script{:type => "text/javascript", :src  => "javascripts/dtnbnk/Login.js"}
+    %script{:type => "text/javascript", :src  => "javascripts/dtnbnk/LayoutManager.js"}
+    %script{:type => "text/javascript", :src  => "javascripts/sammy.js"}
+    %script{:type => "text/javascript", :src  => "javascripts/jquery.layout.js"}
     %script{:type => "text/javascript", :src  => "javascripts/app.js"}
   %body

@@ -9,11 +9,31 @@
 !pane_background_color = #303133
 !pane_background_color2 = #909193
 !pane_border_color = #303133
-!pane_heading_color = #303133
+!pane_heading_color = #ffff00
 
 body 
   font: 11px/1.5 Helvetica
   background = !background_color
+
+.overlaymessage
+  z-index: 5000
+  position: fixed
+  left: 50%
+  bottom: 50%
+  width: 200px
+  padding: 10px
+  background: #000
+  opacity: 0.8
+  color: #FFF
+  margin: -55px 0 0 -105px
+  -moz-border-radius: 8px
+  -webkit-border-radius: 8px
+  border-radius: 8px
+  font-size: 36px
+  letter-spacing: -2px
+  text-align: center
+
+
 
 .appcontainer
   margin: 20px
@@ -25,15 +45,22 @@ body
 #col3
   width: 600px
 
-body > h1
-  margin: 20px
-  font-size: 38px
+.ui-layout-pane h1
+  margin: 10px 14px 0 14px
+  font-size: 138px
+  line-height: .9em
   font-weight: bold
-  letter-spacing: -3px
+  letter-spacing: -6px
   color= !pane_heading_color
 
-
-
+#header 
+  padding: 14px 10px
+  h1
+    font-size: 38px
+    letter-spacing: -3px
+    color = !pane_background_color
+    margin: 0
+  
 input[type="text"],input[type="password"]
   background: white
   border: 1px solid #aaa
@@ -63,6 +90,14 @@ input[type="text"],input[type="password"]
     display: none 
   .content
     color = !pane_border_color
+    ul
+      +no-bullets
+      margin: 0 0 0 14px
+      li
+        a
+          font-weight: bold
+          +link-colors(#333, #ffff00)
+          text-decoration: none
   .tags
     color: white
     padding: 5px

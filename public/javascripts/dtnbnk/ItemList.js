@@ -1,7 +1,7 @@
 ItemList = Class({
 	init: function(element, data) {
 		this.options = $.extend({
-		
+		  links: false
 		}, data || {});
 		this.element = element;
 		this.items = new Array();
@@ -19,11 +19,20 @@ ItemList = Class({
 		var father = this;
 		this.items = new Array();
 		this.container.empty();
+		var links = null;
+		if (this.options.links) {
+		  links = $("<ul />").appendTo(this.container);
+		}
 		$.postJSON("testquery",query,function(data,el) {
 			items = JSON.parse(data);
 			for (var i=0; i<items.length; i++) {
-				var item = makenew(items[i]);
-				father.add(item);
+				if (father.options.links) {
+				  links.append($("<li/>").append($("<a/>").text(items[i].name).attr("href",items[i].url || "#")));
+				} else {
+				  var item = makenew(items[i]);
+  				father.add(item);
+				}
+				
 			}
 	    });
 	},
