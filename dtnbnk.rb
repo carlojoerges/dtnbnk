@@ -9,8 +9,6 @@ set :database, "sqlite://development.sqlite3"
 migration "Create Items" do
   database.create_table :items do
     primary_key :id
-    Time :created_at
-    Time :updated_at
     String :content, :default => "{}"
   end
 end
@@ -29,7 +27,6 @@ end
 # Setup Models
 #
 class Item < Sequel::Model
-  plugin :Timestamps
   Item.many_to_many :forward_items, :class => Item, :join_table => :associations, :left_key => :mid, :right_key => :iid
   Item.many_to_many :backward_items, :class => Item, :join_table => :associations, :left_key => :iid, :right_key => :mid
   

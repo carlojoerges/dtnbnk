@@ -15,6 +15,8 @@ Item = Class({
 	update: function(callback) {
 		updateobject = this.data;
 		delete updateobject.include;
+		delete updateobject.updated_at;
+		delete updateobject.created_at;
 		var father = this;
 		var cb = callback;
 		$.postJSON("item", updateobject, function(resp) {
@@ -31,10 +33,13 @@ Item = Class({
 			});
 		}
 	},
-	associate: function(id) {
+	associate: function(id, callback) {
+	  var father = this;
+		var cb = callback;
 		if (this.data.id) {
 			$.get("assoc/"+this.data.id+"/"+id, null, function(resp) {
 				console.log("Associated.");
+				if (cb) cb();
 			});
 		}
 	},

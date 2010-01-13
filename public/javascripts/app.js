@@ -21,29 +21,41 @@
 // 	login = new Login($("<div />").appendTo($("#col2")));
 // }
 
+function renderPage(url) {
+  $.postJSON("testquery", {type: "page", url: url, forward_items:"all"}, function(resp) {
+		respObj = JSON.parse(resp);
+		if (respObj && respObj[0]) {
+		  el = $("<div/>");
+		  el.appendTo(layoutManager.getCenter().empty());
+			ob = new Page(respObj[0],el);
+		} else {
+			layoutManager.getCenter().html("<h1>404<br/>Not found.</h1>")
+		}
+	});
+}
+
+
 var login = null;
 var layoutManager = null;
 var app = $.sammy(function() {
-	this.get('#/login', function() {
+	this.get(/\#\/admin\/(.*)/, function() {
 		if (!login) {
 			login = new Login($('#login'));
 			layoutManager.layout.open("east");
 		} else {
 			layoutManager.layout.open("east");
 		}
+		renderPage(this.params['splat'][0]);
 	});
 	this.get(/\#\/(.*)/, function() {
-		layoutManager.layout.close("east");
-		$.postJSON("testquery", {type: "project", name: this.params['splat'][0]}, function(resp) {
-			respObj = JSON.parse(resp);
-			if (respObj && respObj[0]) {
-			  el = $("<div/>");
-			  el.appendTo(layoutManager.getCenter().empty());
-				ob = new Project(respObj[0],el);
-			} else {
-				layoutManager.getCenter().html("<h1>404<br/>Not found.</h1>")
-			}
-		});
+		
+		if (login && login.loggedIn()) {
+      console.log("redir");
+		  this.redirect('#/admin', this.params['splat'][0]);
+		} else {
+		  layoutManager.layout.close("east");
+		  renderPage(this.params['splat'][0]);
+	  }
 	});
 });
 
@@ -52,15 +64,15 @@ $(function() {
 	layoutManager.setLayout({
 	  west: {
 	          type: "ItemList",
-	          options: { links: true, query: { type: "project", forward_items:"all"} }
+	          options: { links: true, query: { type: "page",forward_items:"all"} }
 	        }
 	});
-  $("<div />").addClass("edit").Button(function() {
-    projectlist.add(new Project({},$("<div/>")));
-  },"New Entry").appendTo("#header").hide();
-  $("<div />").addClass("edit").Button(function() {
-    vocablist.add(new Vocabulary({},$("<div/>")));
-  },"New Vocabulary").appendTo("#header").hide();
+  // $("<div />").addClass("edit").Button(function() {
+  //   projectlist.add(new Project({},$("<div/>")));
+  // },"New Entry").appendTo("#header").hide();
+  // $("<div />").addClass("edit").Button(function() {
+  //   vocablist.add(new Vocabulary({},$("<div/>")));
+  // },"New Vocabulary").appendTo("#header").hide();
   
 	app.run('#/');
 });

@@ -15,9 +15,12 @@ body
   font: 11px/1.5 Helvetica
   background = !background_color
 
+#content
+  overflow: auto
+
 .overlaymessage
   z-index: 5000
-  position: fixed
+  position: absolute
   left: 50%
   bottom: 50%
   width: 200px
@@ -46,12 +49,17 @@ body
   width: 600px
 
 .ui-layout-pane h1
-  margin: 10px 14px 0 14px
   font-size: 138px
   line-height: .9em
   font-weight: bold
   letter-spacing: -6px
   color= !pane_heading_color
+
+.page h1
+  font-size: 38px
+  letter-spacing: -1px
+  color = !pane_background_color
+
 
 #header 
   padding: 14px 10px
@@ -90,7 +98,7 @@ input[type="text"],input[type="password"]
     display: none 
   .content
     color = !pane_border_color
-    ul
+    &.links
       +no-bullets
       margin: 0 0 0 14px
       li
@@ -169,9 +177,6 @@ input[type="text"],input[type="password"]
 
 .tag
   display: inline-block
-
-.edit
-  display: none
 
 .button
   display: inline-block

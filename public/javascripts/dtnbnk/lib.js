@@ -32,7 +32,7 @@ $.fn.Button = function(callback, title) {
 };
 
 function flashmessage(el, msg) {
-	$(el).append(msg.addClass("overlaymessage").hide().fadeIn("fast").animate({dummy: 1}, 1000).fadeOut("slow", function(){
+	$("body").append(msg.addClass("overlaymessage").hide().fadeIn("fast").animate({dummy: 1}, 1000).fadeOut("slow", function(){
 		$(this).remove();
 		}));  
 }
@@ -46,13 +46,14 @@ function makenew(ob) {
 		case "paragraph": item = new Paragraph(ob,$("<div/>")); break;
 		case "image": item = new Image(ob,$("<div/>")); break;
 		case "project": item = new Project(ob,$("<div/>")); break;
+		case "page": item = new Page(ob,$("<div/>")); break;
 		default: item = new Item(ob); break;
 	}
 	return item;
 }
 
 function getUser() {
-	if (login && login.data) return login.data; else return false;
+	if (login) return login.loggedIn(); else return null;
 }
 
 function closeKeepAlive() {

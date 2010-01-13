@@ -22,6 +22,9 @@ Login = Class({
 		}}));
 		$("body .edit").hide();
 	},
+	loggedIn: function() {
+	  if (this.data) return this.data.id; else return null;
+	},
 	authenticate: function(user, pass) {
 		var father = this;
 		$.postJSON("testquery", {user: user, password: hex_sha1(pass)}, function(resp) {
