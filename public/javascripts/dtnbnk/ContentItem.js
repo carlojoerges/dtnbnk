@@ -13,6 +13,21 @@ ContentItem = Item.extend({
 		this.__super__();
 		this.element.remove();
 	},
+	remove_allchildren: function() {
+	  console.log("removeall");
+	  console.log(this.items);
+    //    $.each(this.items, function(i,ob) {
+    //  console.log(ob);
+    //  console.log("r");
+    // });
+	},
+	remove_children: function(types) {
+	  if (!types) this.remove_allchildren(); else {
+	    $.each(this.items, function(i,ob) {
+  			if (types.indexOf(ob.data.type)) ob.remove();
+  		});
+	  }
+	},
 	remove_child: function(obj) {
 		this.deassociate(obj.data.id);
 		for(var i=0; i<this.items.length;i++ ) { 
@@ -24,7 +39,6 @@ ContentItem = Item.extend({
 		obj.parent_item = this;
 		obj.element.appendTo(this.container);
 
-
 		if (!obj.data.id) {
 			var father = this;
 			var son = obj;
@@ -34,9 +48,7 @@ ContentItem = Item.extend({
 				});
 			});
 		}
-
 		this.makesortable();
-//    if (!obj.data["sort"]) obj.refreshsort(this.container);
 	},
 	makesortable: function() {
 		var father = this;

@@ -67,12 +67,6 @@ $(function() {
 	          options: { links: true, query: { type: "page",forward_items:"all"} }
 	        }
 	});
-  // $("<div />").addClass("edit").Button(function() {
-  //   projectlist.add(new Project({},$("<div/>")));
-  // },"New Entry").appendTo("#header").hide();
-  // $("<div />").addClass("edit").Button(function() {
-  //   vocablist.add(new Vocabulary({},$("<div/>")));
-  // },"New Vocabulary").appendTo("#header").hide();
   
 	app.run('#/');
 });

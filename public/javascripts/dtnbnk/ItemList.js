@@ -76,7 +76,7 @@ ItemList = Class({
 		
 		if (linked || this.options.links) {
 		  this.container.append($("<li/>").append(obj.link));
-		  console.log(obj.link.html());
+		  
 		} else {
 		  obj.element.appendTo(this.container);
 	  }

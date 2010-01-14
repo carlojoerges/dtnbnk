@@ -113,7 +113,7 @@
             /* save them for later use as workaround */
             var savedwidth  = $(self).width();
             var savedheight = $(self).height();
-            
+
             /* save so it can be later used by $.editable('destroy') */
             $(this).data('event.editable', settings.event);
             
@@ -121,9 +121,9 @@
             if (!$.trim($(this).html())) {
                 $(this).html(settings.placeholder);
             }
-            
+
             $(this).bind(settings.event, function(e) {
-                
+
                 /* abort if disabled for this element */
                 if (true === $(this).data('disabled.editable')) {
                     return;
@@ -150,20 +150,21 @@
                 
                 /* figure out how wide and tall we are, saved width and height */
                 /* are workaround for http://dev.jquery.com/ticket/2190 */
-                if (0 == $(self).width()) {
-                    //$(self).css('visibility', 'hidden');
-                    settings.width  = savedwidth;
-                    settings.height = savedheight;
-                } else {
-                    if (settings.width != 'none') {
-                        settings.width = 
-                            settings.autowidth ? $(self).width()  : settings.width;
-                    }
-                    if (settings.height != 'none') {
-                        settings.height = 
-                            settings.autoheight ? $(self).height() : settings.height;
-                    }
-                }
+        //Carlo Edit
+        // if (0 == $(self).width()) {
+        // 
+        //     settings.width  = savedwidth;
+        //     settings.height = savedheight;
+        // } else {
+        //     if (settings.width != 'none') {
+        //         settings.width = 
+        //             settings.autowidth ? $(self).width()  : settings.width;
+        //     }
+        //     if (settings.height != 'none') {
+        //         settings.height = 
+        //             settings.autoheight ? $(self).height() : settings.height;
+        //     }
+        // }
                 //$(this).css('visibility', '');
                 
                 /* remove placeholder text, replace is here because of IE */
