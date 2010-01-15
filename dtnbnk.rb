@@ -193,7 +193,7 @@ module Sequel
       nestedqueries = extract_nestedquery(query)
       cond = QueryParser.new(query).conditions
       res = self.all.select do |row|
-        test_row(row.to_hash,cond)
+        test_row(row,cond)
       end
       nestedqueries.each do |key, nestedquery|
         res.each do |row|
@@ -230,13 +230,18 @@ module Sequel
     end
     
     
-    def test_row(item, conditions)
+    def test_row(row, conditions)
+      item = row.to_hash
       res = true
       conditions.each do |c|
-        if item.has_key?(c.column)
-          res &&= send("cond_"+c.map_operator(c.operator,true).to_s,item[c.column.to_s], c.value)
+        if c.column == "id"
+          res &&= row.id == c.value
         else
-          res = false
+          if item.has_key?(c.column)
+            res &&= send("cond_"+c.map_operator(c.operator,true).to_s,item[c.column.to_s], c.value)
+          else
+            res = false
+          end
         end
       end
       res

@@ -2,11 +2,61 @@ ContentItem = Item.extend({
 	init: function(data, element) {
 		this.__super__(data);
 		this.element = element;
+		this.container = this.element;
 		this.editElement = $("<div />").addClass("edit").appendTo(this.element);
 
 		if (getUser()) this.editElement.show(); else this.editElement.hide();
 		this.items = new Array();
 		
+	},
+	fetchChildren: function(includetype) {
+	  var father = this;
+	  this.fetching = true;
+	  
+	  if (this.data.id) $.postJSON("testquery", _.extend({id: this.data.id},includetype || {forward_items:"all"}), function(resp) {
+  		respObj = JSON.parse(resp);
+  		if (respObj && respObj[0]) {
+  		  if (respObj[0].include && respObj[0].include.forward_items) {
+  		   	var sorted_items = respObj[0].include.forward_items.sort(function (a,b) {
+    				return (a.sort > b.sort)?0:-1;
+    			});
+  		   	$.each(sorted_items, function(i,ob) {
+            var item = makenew(ob);
+            father.add(item);
+    			});  		   	
+  		  }  		  
+  		  if (respObj[0].include && respObj[0].include.backward_items) {
+  		    var sorted_items = respObj[0].include.backward_items.sort(function (a,b) {
+    				return (a.sort > b.sort)?0:-1;
+    			});
+          $.each(sorted_items, function(i,ob) {
+            var item = makenew(ob);
+            father.add(item);
+    			});  		   	
+  		  }
+  		}
+  	});
+	  
+	},
+	findFirst: function(type) {
+    var res = false;
+	  $.each(this.items, function(i,ob) {
+			if (!res && ob.data.type == type) res = ob;
+		});
+    return res;
+	},
+	findById: function(id) {
+	  if (id) {
+	    var res = false;
+  	  $.each(this.items, function(i,ob) {
+  			if (!res && ob.data.id == id) res = ob;
+  		});
+      return res;
+	  }
+	},
+	getListClass: function() {
+	  if (this.data.children) return this.data.children.titleize();
+	  else return "Item";
 	},
 	remove: function() {
 		if (this.parent_item) this.parent_item.remove_child(this);
@@ -37,7 +87,9 @@ ContentItem = Item.extend({
 	add: function(obj) {
 		this.items.push(obj);
 		obj.parent_item = this;
-		obj.element.appendTo(this.container);
+		console.log(this.data.type);
+		console.log(this.container);
+		if (this.container) obj.element.appendTo(this.container);
 
 		if (!obj.data.id) {
 			var father = this;
@@ -48,7 +100,7 @@ ContentItem = Item.extend({
 				});
 			});
 		}
-		this.makesortable();
+		if (this.container) this.makesortable();
 	},
 	makesortable: function() {
 		var father = this;

@@ -34,12 +34,12 @@ Vocabulary = ContentItem.extend({
 			var sorted_items = this.data.include.backward_items.sort(function (a,b) {
 				return (a.sort > b.sort)?0:-1;
 			});
-			console.log(sorted_items);
 			$.each(sorted_items, function(i,ob) {
 				var item = makenew(ob);
 				father.add(item);
 			});
 		}
+		this.fetchChildren({backward_items:{type:"tag"}});
 
 	}
 })

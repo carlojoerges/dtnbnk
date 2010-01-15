@@ -118,6 +118,16 @@ input[type="text"],input[type="password"]
   border: 1px solid black
   border-color = !pane_border_color
   background = !pane_background_color
+  &.thumb
+    padding: 1px
+    width: 200px
+    img
+      max-width: 100%
+    a
+      font-size: 16px
+      font-weight: bold
+      +link-colors(#ffffff, #ffff00)
+      text-decoration: none
   & > h1
     cursor: pointer
     font-size: 1em
@@ -127,6 +137,10 @@ input[type="text"],input[type="password"]
     padding: 3px 5px 3px 5px
     background = !pane_border_color
     color = !pane_background_color2
+  .tags
+    color: white
+    padding-left: 5px
+
   .content
     color = !pane_border_color
     margin: 0

@@ -4,7 +4,11 @@ Login = Class({
 		this.data = {
 			type: "user"
 		};
-		var father = this;
+		this.build();
+		$("body .edit").hide();
+	},
+	build: function() {
+	  var father = this;
 		this.element.append($.nano.html("/templates/_login.html",null, {callback: function(el) {
 			$("form .logout",father.element).hide();
 			$("form",father.element).submit(function() {
@@ -20,7 +24,33 @@ Login = Class({
 				return false;
 			});
 		}}));
-		$("body .edit").hide();
+	},
+	render: function(hash) {
+	  parts = hash.split('/');
+	  user = parts.shift();
+	  var father = this;
+	  if (this.data.name && this.data.name == user) {
+	    
+	  } else {
+  		$.postJSON("testquery", {user: user, forward_items: "all"}, function(resp) {
+  			respObj = JSON.parse(resp);
+        var sorted_items = this.data.include.forward_items.sort(function (a,b) {
+  				return (a.sort > b.sort)?0:-1;
+  			});
+  			$.each(sorted_items, function(i,ob) {
+  				var item = makenew(ob);
+  				if (ob.type == "tag") {
+  					father.addtag(item.element, item.data.id);
+  				} else {
+
+  					father.add(item);
+  				}
+  			});
+  			
+			});
+	    
+	  }
+    
 	},
 	loggedIn: function() {
 	  if (this.data) return this.data.id; else return null;

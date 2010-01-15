@@ -47,6 +47,7 @@ function makenew(ob) {
 		case "image": item = new Image(ob,$("<div/>")); break;
 		case "project": item = new Project(ob,$("<div/>")); break;
 		case "page": item = new Page(ob,$("<div/>")); break;
+		case "collection": item = new Collection(ob,$("<div/>")); break;
 		default: item = new Item(ob); break;
 	}
 	return item;

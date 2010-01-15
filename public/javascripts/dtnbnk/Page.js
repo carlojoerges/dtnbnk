@@ -6,7 +6,6 @@ Page = ContentItem.extend({
 		}, data || {});
 		this.link = $("<a><span></span></a>");
 		
-		
 		this.buildex();
 		if (getUser()) $(".edit",this.link).show(); else $(".edit",this.link).hide();
 	},
@@ -94,6 +93,7 @@ Page = ContentItem.extend({
 			});
 			this.makesortable();			
 		}
+//		console.log(this.items);
 
 	}
 })

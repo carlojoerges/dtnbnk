@@ -4,7 +4,9 @@ Project = ContentItem.extend({
 		this.data = $.extend({
 			type: "project"
 		}, data || {});
+		this.link = $("<div/>").addClass("box thumb");
 		this.buildex();
+
 	},
 	addtag: function(tag, tagid) {
 		$(this.tags).append(tag);
@@ -51,16 +53,31 @@ Project = ContentItem.extend({
 			});
 			$.each(sorted_items, function(i,ob) {
 				var item = makenew(ob);
-				if (ob.type == "tag") {
-					father.addtag(item.element, item.data.id);
-				} else {
-					
-					father.add(item);
-				}
+				father.add(item);
 			});
 			this.makesortable();
-			
-		}
+		} else this.fetchChildren();
+    this.buildlink();
+	},
+	buildlink: function() {
+	  this.link.empty();
 
+	  admin = (login)?"admin/":"";
+	  img = this.findFirst("image");
+	  if (img) {
+	    image = $("<img/>").attr("src",img.data.file);
+	    this.link.append(image);
+    }
+	  a = $("<a/>").attr("href", "#/"+admin+url+this.data.id).text(this.data.name);
+	  this.link.append(a);
+	},
+	add:function(item) {
+	    if (item.data.type == "tag") {
+  			this.addtag(item.element, item.data.id);
+  		} else {
+
+  			this.__super__(item);
+  		}
+     // this.buildlink();
 	}
 })

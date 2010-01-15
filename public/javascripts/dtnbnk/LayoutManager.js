@@ -10,7 +10,7 @@ LayoutManager = Class({
 		this.element.empty();
 		$('<div id="header" />').appendTo(this.element);
 		$('<div id="login" />').appendTo(this.element);
-  	$('<div id="sidebar" />').appendTo(this.element);
+  	side = $('<div id="sidebar" />').appendTo(this.element);
   	$('<div id="content" />').appendTo(this.element);
   	this.layout = $(this.element).layout({
   	  spacing_open: 0,
@@ -29,6 +29,7 @@ LayoutManager = Class({
   		east__resizable: false,
   		center__paneSelector: "#content"
   	});
+  	this.layout.allowOverflow(side);
 		this.getNorth().append("<h1>db</h1>");
 	},
 	setLayout: function(layout) {
