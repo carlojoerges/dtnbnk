@@ -2,16 +2,18 @@ ContentItem = Item.extend({
 	init: function(data, element) {
 		this.__super__(data);
 		this.element = element;
-		this.container = this.element;
+		this.container = null;
 		this.editElement = $("<div />").addClass("edit").appendTo(this.element);
 
 		if (getUser()) this.editElement.show(); else this.editElement.hide();
 		this.items = new Array();
+		this.itemsLoaded = false;
+		this.queueUrl = null;
+		this.queueCb = null;
 		
 	},
 	fetchChildren: function(includetype) {
 	  var father = this;
-	  this.fetching = true;
 	  
 	  if (this.data.id) $.postJSON("testquery", _.extend({id: this.data.id},includetype || {forward_items:"all"}), function(resp) {
   		respObj = JSON.parse(resp);
@@ -27,16 +29,32 @@ ContentItem = Item.extend({
   		  }  		  
   		  if (respObj[0].include && respObj[0].include.backward_items) {
   		    var sorted_items = respObj[0].include.backward_items.sort(function (a,b) {
-    				return (a.sort > b.sort)?0:-1;
-    			});
+    			return (a.sort > b.sort)?0:-1;
+    		});
           $.each(sorted_items, function(i,ob) {
             var item = makenew(ob);
             father.add(item);
     			});  		   	
   		  }
   		}
+		father.itemsLoaded = true;
+		if (father.queueCb) {
+			father.queueCb(father.queueUrl);
+		}
   	});
-	  
+	},
+	render:function(url, callback) {
+		this.queueCb = callback || this.show;
+		if (!this.itemsLoaded) {
+			this.queueUrl = url;
+		} else {
+			this.queueUrl = null;
+			this.queueCb(url);
+			this.queueCb = null;
+		}
+	},
+	show: function(url) {
+		//default callback
 	},
 	findFirst: function(type) {
     var res = false;
@@ -87,9 +105,10 @@ ContentItem = Item.extend({
 	add: function(obj) {
 		this.items.push(obj);
 		obj.parent_item = this;
-		console.log(this.data.type);
-		console.log(this.container);
-		if (this.container) obj.element.appendTo(this.container);
+		
+		if (this.container) {
+			obj.element.appendTo(this.container);
+		}
 
 		if (!obj.data.id) {
 			var father = this;

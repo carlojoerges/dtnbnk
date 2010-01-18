@@ -8,20 +8,19 @@ Collection = ContentItem.extend({
 		this.overviewElement = $("<div/>");
 		this.build();
 	},
-	render: function(uri) {
-    layoutManager.getCenter().children().remove();
-
-    if (uri.length) {
-      ob = this.findById(parseInt(uri));
-      if (ob) {
-        layoutManager.getCenter().append(ob.element);
-      } else {
-        layoutManager.getCenter().append("<h1>Not found.</h1>");
-      }
-    } else {
-
-      layoutManager.getCenter().append(this.overviewElement);
-    }
+	show: function(uri) {
+	    if (uri.length) {
+	      ob = this.findById(parseInt(uri));
+			console.log(uri);
+	      if (ob) {
+			//alert("add fin")
+	        layoutManager.getCenter().empty().append(ob.element);
+	      } else {
+	        layoutManager.getCenter().empty().append("<h1>Not found.</h1>");
+	      }
+	    } else {
+	      layoutManager.getCenter().empty().append(this.overviewElement);
+	    }
 	},
 	build: function() {
 		this.element.empty();
@@ -39,16 +38,36 @@ Collection = ContentItem.extend({
     this.fetchChildren();
 	},
 	add: function(obj) {
-	  switch (obj.data.type) {
-	    case "project":
-	      this.container = null;
-	      this.overviewElement.append(obj.link);
-	      break;
-	    case "vocab":
-	      this.container = this.element;
-	      break;
-	  }
-	  this.__super__(obj);
+	  // switch (obj.data.type) {
+	  //   case "project":
+	  //     this.overviewElement.append(obj.link);
+	  //     break;
+	  //   case "vocab":
+	  //     break;
+	  // }
+	  // this.__super__(obj);
+	
+		this.items.push(obj);
+		obj.parent_item = this;
+		
+		if (this.container && obj.data.type == "project") {
+			obj.element.appendTo(this.container);
+		}
+		if (obj.data.type == "project") this.overviewElement.append(obj.link);
+
+		if (!obj.data.id) {
+			var father = this;
+			var son = obj;
+			obj.update(function() {
+				father.associate(son.data.id, function() {
+				  son.refreshsort(father.container);
+				});
+			});
+		}
+		if (this.container) this.makesortable();
+	
+	
+	
 	},
 	makeButtons: function() {
 	  var father = this;

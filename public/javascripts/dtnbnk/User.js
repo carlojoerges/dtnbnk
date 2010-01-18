@@ -7,15 +7,17 @@ User = ContentItem.extend({
 		this.buildex();
 
 	},
-	render: function(uri) {
-	  parts = uri.split('/');
-    type = parts.shift();
-    switch(type) {
-      case "collection":
-        ob = this.findFirst("collection");
-        if (ob) ob.render(parts.join("/"));
-        break;
-    }
+	show: function(uri) {
+		parts = uri.split('/');
+	    type = parts.shift();
+	    switch(type) {
+	      case "collection":
+	        ob = this.findFirst("collection");
+	        if (ob) ob.render(parts.join("/"));
+	        break;
+		  default: 
+			layoutManager.getCenter().empty().html("<h1>Hello.</h1>");
+    	}
     
 	},
 	buildex: function() {
@@ -33,6 +35,7 @@ User = ContentItem.extend({
 				father.container = layoutManager.getWest();
 				father.add(item);
 			});	
+			this.itemsLoaded = true;
 		}
 	}
 });

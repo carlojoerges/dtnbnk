@@ -2,9 +2,11 @@ Project = ContentItem.extend({
 	init: function(data, element) {
 		this.__super__(data, element);
 		this.data = $.extend({
-			type: "project"
+			type: "project",
+			name: "New Project"
 		}, data || {});
 		this.link = $("<div/>").addClass("box thumb");
+		this.link.text("");
 		this.buildex();
 
 	},
@@ -20,7 +22,7 @@ Project = ContentItem.extend({
 		this.element.addClass("box project");
 		this.head = $("<h1/>").appendTo(this.element);
 		this.container = $("<div/>").addClass("content").appendTo(this.element);
-		this.head.text(this.data.name || "New Project").makeeditable(this);
+		this.head.text(this.data.name).makeeditable(this);
 		var father = this;
 		this.buttons = this.editElement;
 		this.tags = $("<div/>").addClass("tags").text("Tags:").droppable({ accept: '.tag', hoverClass: 'drophover' }).insertAfter(this.container);
@@ -56,7 +58,9 @@ Project = ContentItem.extend({
 				father.add(item);
 			});
 			this.makesortable();
-		} else this.fetchChildren();
+		} else {
+			this.fetchChildren();
+		}
     this.buildlink();
 	},
 	buildlink: function() {
@@ -67,7 +71,7 @@ Project = ContentItem.extend({
 	  if (img) {
 	    image = $("<img/>").attr("src",img.data.file);
 	    this.link.append(image);
-    }
+	    }
 	  a = $("<a/>").attr("href", "#/"+admin+url+this.data.id).text(this.data.name);
 	  this.link.append(a);
 	},
@@ -75,9 +79,8 @@ Project = ContentItem.extend({
 	    if (item.data.type == "tag") {
   			this.addtag(item.element, item.data.id);
   		} else {
-
   			this.__super__(item);
   		}
-     // this.buildlink();
+      this.buildlink();
 	}
 })
